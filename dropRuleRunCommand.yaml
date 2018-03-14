@@ -1,0 +1,22 @@
+﻿AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  dropRuleRunCommand:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda_drop_function.lambda_handler
+      Runtime: python2.7
+      CodeUri: 's3://nikitakumarbucket/dropRuleRunCommand.zip'
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::678196089095:role/LambdatoSSM'
+      Events:
+        SNS1:
+          Type: SNS
+          Properties:
+            Topic:
+              Ref: SNSTopic1
+  SNSTopic1:
+    Type: 'AWS::SNS::Topic'
