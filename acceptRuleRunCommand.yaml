@@ -1,13 +1,20 @@
-﻿AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: An AWS Serverless Specification template describing your function.
+Parameters:
+    CodeKey:
+        Type: String
+
 Resources:
   acceptRuleRunCommand:
     Type: 'AWS::Serverless::Function'
     Properties:
       Handler: lambda_accept_function.lambda_handler
       Runtime: python2.7
-      CodeUri: 's3://nikitakumarbucket/acceptRuleRunCommand.zip'
+      CodeUri:
+           Bucket: 'cybage-alm-sam'
+           Key: !Ref CodeKey
+
       Description: ''
       MemorySize: 128
       Timeout: 3
@@ -20,4 +27,4 @@ Resources:
               Ref: SNSTopic1
   SNSTopic1:
     Type: 'AWS::SNS::Topic'
-
+    
